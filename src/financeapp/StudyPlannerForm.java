@@ -26,10 +26,10 @@ public class StudyPlannerForm extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
 
-        // --- GORNJI DIO: Unos podataka i Kalendar ---
+
         JPanel inputPanel = new JPanel(new GridLayout(2, 5, 5, 5));
 
-        // Kalendar implementacija preko JSpinnera
+
         dateSpinner = new JSpinner(new SpinnerDateModel());
         JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateSpinner, "yyyy-MM-dd");
         dateSpinner.setEditor(dateEditor);
@@ -43,7 +43,7 @@ public class StudyPlannerForm extends JFrame {
         inputPanel.add(new JLabel("Predmet:"));
         inputPanel.add(new JLabel("Cilj (h):"));
         inputPanel.add(new JLabel("Učeno (h):"));
-        inputPanel.add(new JLabel("")); // Prazno za poravnanje
+        inputPanel.add(new JLabel("")); 
 
         inputPanel.add(dateSpinner);
         inputPanel.add(txtPredmet);
@@ -53,13 +53,13 @@ public class StudyPlannerForm extends JFrame {
 
         add(inputPanel, BorderLayout.NORTH);
 
-        // --- SREDNJI DIO: Tabela ---
+
         String[] kolone = {"ID", "Datum", "Predmet", "Cilj (h)", "Učeno (h)"};
         tableModel = new DefaultTableModel(kolone, 0);
         table = new JTable(tableModel);
         add(new JScrollPane(table), BorderLayout.CENTER);
 
-        // --- DONJI DIO: CRUD Kontrole ---
+
         JPanel controlPanel = new JPanel();
         JButton btnDelete = new JButton("Obriši označeno");
         JButton btnRefresh = new JButton("Prikaži za datum");
@@ -67,12 +67,12 @@ public class StudyPlannerForm extends JFrame {
         controlPanel.add(btnDelete);
         add(controlPanel, BorderLayout.SOUTH);
 
-        // --- AKCIJE ---
+
         btnAdd.addActionListener(e -> saveStudyPlan());
         btnRefresh.addActionListener(e -> loadStudyPlans());
         btnDelete.addActionListener(e -> deleteStudyPlan());
 
-        loadStudyPlans(); // Učitaj sve pri pokretanju
+        loadStudyPlans(); 
         setVisible(true);
     }
 
@@ -94,7 +94,7 @@ public class StudyPlannerForm extends JFrame {
     }
 
     private void loadStudyPlans() {
-        tableModel.setRowCount(0); // Očisti tabelu
+        tableModel.setRowCount(0); 
         MongoCollection<Document> collection = MongoDBConnection.getDatabase().getCollection("study_plans");
 
         for (Document doc : collection.find(Filters.eq("username", trenutniKorisnik))) {
