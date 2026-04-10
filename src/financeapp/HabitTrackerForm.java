@@ -24,7 +24,7 @@ public class HabitTrackerForm extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(20, 20));
 
-        // --- GORNJI DIO: Kalendar i Naslov ---
+
         JPanel headerPanel = new JPanel(new GridLayout(2, 1));
         lblDatum = new JLabel("Datum: " + danasnjiDatum, SwingConstants.CENTER);
         lblDatum.setFont(new Font("Segoe UI", Font.BOLD, 16));
@@ -33,12 +33,12 @@ public class HabitTrackerForm extends JFrame {
         headerPanel.add(title);
         add(headerPanel, BorderLayout.NORTH);
 
-        // --- SREDNJI DIO: Progresivni Box (Progress Bar) ---
+
         JPanel centerPanel = new JPanel(new GridBagLayout());
         waterBar = new JProgressBar(JProgressBar.VERTICAL, 0, CILJ);
         waterBar.setPreferredSize(new Dimension(80, 250));
-        waterBar.setStringPainted(true); // Prikazuje tekst unutar bara
-        waterBar.setForeground(new Color(51, 153, 255)); // Plava boja vode
+        waterBar.setStringPainted(true); 
+        waterBar.setForeground(new Color(51, 153, 255)); 
 
         lblStatus = new JLabel("Popijeno: 0 / 10", SwingConstants.CENTER);
         lblStatus.setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -51,13 +51,13 @@ public class HabitTrackerForm extends JFrame {
 
         add(centerPanel, BorderLayout.CENTER);
 
-        // --- DONJI DIO: Kontrole (+ / -) ---
+
         JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
         btnMinus = new JButton(" - ");
         btnPlus = new JButton(" + ");
         btnSave = new JButton("Spasi u bazu");
 
-        // Stilizacija dugmadi
+
         btnMinus.setFont(new Font("Arial", Font.BOLD, 25));
         btnPlus.setFont(new Font("Arial", Font.BOLD, 25));
 
@@ -66,25 +66,25 @@ public class HabitTrackerForm extends JFrame {
         controlPanel.add(btnSave);
         add(controlPanel, BorderLayout.SOUTH);
 
-        // --- LOGIKA ---
+
         btnPlus.addActionListener(e -> updateWater(1));
         btnMinus.addActionListener(e -> updateWater(-1));
         btnSave.addActionListener(e -> saveToDatabase());
 
-        loadTodayData(); // Učitaj ako je korisnik već unosio danas
+        loadTodayData(); 
         setVisible(true);
     }
 
     private void updateWater(int promjena) {
         int noviBroj = trenutniBrojCasa + promjena;
 
-        // Granice (minimalno 0, maksimalno 10 - ili više ako želiš)
+
         if (noviBroj >= 0 && noviBroj <= 15) {
             trenutniBrojCasa = noviBroj;
             waterBar.setValue(trenutniBrojCasa);
             lblStatus.setText("Popijeno: " + trenutniBrojCasa + " / " + CILJ);
 
-            // Promjena boje ako je cilj ostvaren
+
             if (trenutniBrojCasa >= CILJ) {
                 waterBar.setForeground(Color.GREEN);
                 lblStatus.setText("Cilj ostvaren! (" + trenutniBrojCasa + ")");
@@ -99,7 +99,7 @@ public class HabitTrackerForm extends JFrame {
             MongoDatabase db = MongoDBConnection.getDatabase();
             MongoCollection<Document> collection = db.getCollection("habit_water");
 
-            // Update ako već postoji za ovaj dan, inače insert (Upsert logika)
+
             Document query = new Document("username", trenutniKorisnik).append("datum", danasnjiDatum);
             Document update = new Document("$set", new Document("brojCasa", trenutniBrojCasa));
 
