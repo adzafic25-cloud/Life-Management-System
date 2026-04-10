@@ -33,11 +33,10 @@ public class ProfileUpdateForm extends JFrame {
         add(comboTheme);
 
         btnSave = new JButton("Spasi promjene");
-        add(new JLabel("")); // Prazan prostor
+        add(new JLabel("")); 
         add(btnSave);
 
         btnSave.addActionListener(e -> {
-            // Ispravljena imena varijabli da odgovaraju onima na vrhu klase
             String noviUser = txtNewUser.getText();
             String novaTema = (String) comboTheme.getSelectedItem();
             String novaLozinka = new String(txtNewPass.getPassword());
@@ -46,8 +45,7 @@ public class ProfileUpdateForm extends JFrame {
                 MongoDatabase db = MongoDBConnection.getDatabase();
                 MongoCollection<Document> collection = db.getCollection("users");
 
-                // 1. AŽURIRANJE U BAZI
-                // Koristimo 'staroKorisnickoIme' da pronađemo korisnika, a 'noviUser' da ga ažuriramo
+              
                 collection.updateOne(
                         Filters.eq("username", staroKorisnickoIme),
                         new Document("$set", new Document("username", noviUser)
@@ -57,7 +55,7 @@ public class ProfileUpdateForm extends JFrame {
 
                 JOptionPane.showMessageDialog(null, "Promjene su spašene!");
 
-                // 2. Otvori novi MainMenu sa novim podacima i zatvori ovaj prozor
+
                 new MainMenu(noviUser, novaTema);
                 this.dispose();
 
