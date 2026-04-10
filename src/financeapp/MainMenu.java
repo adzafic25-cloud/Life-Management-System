@@ -6,7 +6,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 public class MainMenu extends JFrame {
-    private JPanel panel1; // Dodaj ovu liniju
+    private JPanel panel1; 
     private JButton btnFinance;
     private JButton btnSleep;
     private JButton btnStudy;
@@ -22,34 +22,34 @@ public class MainMenu extends JFrame {
         setSize(800, 600);
         setLocationRelativeTo(null);
 
-        // Glavni panel sa marginama (Padding 30px)
+
         JPanel mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBorder(new EmptyBorder(30, 30, 30, 30));
         GridBagConstraints gbc = new GridBagConstraints();
-        // --- STILIZACIJA POZADINE PANELA ---
+
         if ("Zelena".equals(tema)) {
-            mainPanel.setBackground(new Color(220, 240, 220)); // Svijetlo zelena
+            mainPanel.setBackground(new Color(220, 240, 220)); 
         } else if ("Tamna".equals(tema)) {
-            mainPanel.setBackground(new Color(45, 45, 45)); // Tamno siva
+            mainPanel.setBackground(new Color(45, 45, 45)); 
         } else if ("Cyberpunk".equals(tema)) {
-            mainPanel.setBackground(new Color(20, 0, 20)); // Tamno ljubičasta
+            mainPanel.setBackground(new Color(20, 0, 20)); 
         } else {
-            mainPanel.setBackground(new Color(245, 245, 245)); // Standardna siva/bijela
+            mainPanel.setBackground(new Color(245, 245, 245)); 
         }
 
-        // --- STILIZACIJA TRACKER DUGMADI ---
+
         btnFinance = createTrackerButton("Finance Tracker", tema);
         btnSleep = createTrackerButton("Sleep Tracker", tema);
         btnStudy = createTrackerButton("Study Planner", tema);
         btnHabit = createTrackerButton("Habit Tracker", tema);
 
-        // --- RASPODJELA U 2x2 MREŽU ---
+
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx = 1.0;
-        gbc.weighty = 0.45; // Zauzimaju 90% visine (45% svaki red)
-        gbc.insets = new Insets(15, 15, 15, 15); // Razmak između dugmadi
+        gbc.weighty = 0.45; 
+        gbc.insets = new Insets(15, 15, 15, 15); 
 
-        // Red 0
+
         gbc.gridx = 0;
         gbc.gridy = 0;
         mainPanel.add(btnFinance, gbc);
@@ -57,7 +57,7 @@ public class MainMenu extends JFrame {
         gbc.gridy = 0;
         mainPanel.add(btnSleep, gbc);
 
-        // Red 1
+
         gbc.gridx = 0;
         gbc.gridy = 1;
         mainPanel.add(btnStudy, gbc);
@@ -65,29 +65,29 @@ public class MainMenu extends JFrame {
         gbc.gridy = 1;
         mainPanel.add(btnHabit, gbc);
 
-        // --- SETTINGS DUGME (Donji desni ugao) ---
+
         btnSettings = new JButton("⚙ Postavke Profila");
         btnSettings.setPreferredSize(new Dimension(150, 40));
 
         gbc.gridx = 1;
         gbc.gridy = 2;
-        gbc.weighty = 0.1; // Zauzima preostalih 10% visine
+        gbc.weighty = 0.1; 
         gbc.fill = GridBagConstraints.NONE;
-        gbc.anchor = GridBagConstraints.SOUTHEAST; // Desni donji ugao
+        gbc.anchor = GridBagConstraints.SOUTHEAST; 
         mainPanel.add(btnSettings, gbc);
 
 
-        // AKCIJA ZA SLEEP TRACKER
+
         btnSleep.addActionListener(e -> {
             try {
-                // Pozivamo SleepTrackerForm i šaljemo mu trenutnog korisnika
+
                 new SleepTrackerForm(trenutniKorisnik);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Greška pri otvaranju Sleep Trackera: " + ex.getMessage());
             }
         });
 
-        // AKCIJA ZA STUDY PLANNER
+
         btnStudy.addActionListener(e -> {
             try {
                 new StudyPlannerForm(trenutniKorisnik);
@@ -97,7 +97,7 @@ public class MainMenu extends JFrame {
             }
         });
 
-        // AKCIJA ZA HABIT TRACKER
+
         btnHabit.addActionListener(e -> {
             try {
                 new HabitTrackerForm(trenutniKorisnik);
@@ -107,29 +107,28 @@ public class MainMenu extends JFrame {
             }
         });
 
-        // LOGIKA ZA UPDATE (Tačka 5)
+
         btnSettings.addActionListener(e -> {
             new ProfileUpdateForm(trenutniKorisnik);
             this.dispose();
         });
         System.out.println("Inicijalizacija akcija...");
-        // AKCIJA ZA FINANCE TRACKER
+
         btnFinance.addActionListener(e -> {
             try {
                 FinanceTrackerForm forma = new FinanceTrackerForm();
                 forma.setVisible(true);
                 System.out.println("Forma bi trebala biti vidljiva.");
             } catch (Exception ex) {
-                ex.printStackTrace(); // Ovo će nam reći tačnu liniju gdje puca
+                ex.printStackTrace(); 
                 JOptionPane.showMessageDialog(null, "Greška: " + ex.getMessage());
             }
         });
 
-// "Habit Tracker dolazi uskoro!"));
 
-        add(mainPanel); // Ovo je tvoja linija 75
-        setVisible(true); // Ovo je tvoja linija 76
-    }
+
+        add(mainPanel); 
+        setVisible(true); 
 
     private JButton createTrackerButton(String text, String tema) {
         JButton btn = new JButton(text);
@@ -137,7 +136,7 @@ public class MainMenu extends JFrame {
         btn.setFocusPainted(false);
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        // Provjera naziva teme (pazi na velika/mala slova kao u bazi!)
+
         if ("Zelena".equals(tema)) {
             btn.setBackground(new Color(40, 167, 69));
             btn.setForeground(Color.WHITE);
@@ -147,10 +146,10 @@ public class MainMenu extends JFrame {
             btn.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
         } else if ("Cyberpunk".equals(tema)) {
             btn.setBackground(Color.BLACK);
-            btn.setForeground(new Color(0, 255, 255)); // Neon plava slova
-            btn.setBorder(BorderFactory.createLineBorder(new Color(255, 0, 255), 2)); // Roza okvir
+            btn.setForeground(new Color(0, 255, 255)); 
+            btn.setBorder(BorderFactory.createLineBorder(new Color(255, 0, 255), 2)); 
         } else {
-            // "Standard" ili bilo koja druga tema
+
             btn.setBackground(Color.WHITE);
             btn.setForeground(new Color(50, 50, 50));
             btn.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2));
@@ -160,19 +159,10 @@ public class MainMenu extends JFrame {
     }
 
     {
-// GUI initializer generated by IntelliJ IDEA GUI Designer
-// >>> IMPORTANT!! <<<
-// DO NOT EDIT OR ADD ANY CODE HERE!
         $$$setupUI$$$();
     }
 
-    /**
-     * Method generated by IntelliJ IDEA GUI Designer
-     * >>> IMPORTANT!! <<<
-     * DO NOT edit this method OR call it in your code!
-     *
-     * @noinspection ALL
-     */
+    
     private void $$$setupUI$$$() {
         panel1 = new JPanel();
         panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), 20, 20, true, true));
@@ -200,9 +190,8 @@ public class MainMenu extends JFrame {
         panel1.add(btnHabit, new com.intellij.uiDesigner.core.GridConstraints(1, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(218, 30), null, 0, false));
     }
 
-    /**
-     * @noinspection ALL
-     */
+    
+     
     public JComponent $$$getRootComponent$$$() {
         return panel1;
     }
